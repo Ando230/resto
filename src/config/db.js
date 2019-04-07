@@ -12,4 +12,4 @@ let config = {
 let app = Firebase.initializeApp(config)
 export const db = app.database()
 export const storage = app.storage()
-export const database = app.firestore();
+//export const database = app.firestore();
