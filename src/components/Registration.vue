@@ -17,7 +17,7 @@
             <div class="md-layout-item md-small-size-100 md-size-100">
               <md-field>
                 <label>Adresse</label>
-                <md-input v-model="username" type="text"></md-input>
+                <md-input v-model="adresse" type="text"></md-input>
               </md-field>
             </div>
 
@@ -30,7 +30,7 @@
             <div class="md-layout-item md-small-size-100 md-size-100">
               <md-field>
                 <label>Confirmer mot de passe</label>
-                <md-input v-model="password" type="text"></md-input>
+                <md-input v-model="confpassword" type="text"></md-input>
               </md-field>
             </div>
             <div class="md-layout-item md-size-100 text-right">
@@ -44,8 +44,22 @@
 </template>
 <script>
 export default {
-    
-}
+  name: "edit-profile-form",
+  props: {
+    dataBackgroundColor: {
+      type: String,
+      default: ""
+    }
+  },
+  data() {
+    return {
+      username: null,
+      adresse: null,
+      password: null,
+      confpassword:null
+    };
+  }
+};
 </script>
 <style>
 #container{
