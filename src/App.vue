@@ -20,11 +20,15 @@
             <router-link :to="{ name: 'Home' }" class="nav-link">Home</router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'Login' }" class="nav-link">Login</router-link>
+            <router-link :to="{ name: 'Commander' }" class="nav-link">Commander</router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'Registration' }" class="nav-link">Inscription</router-link>
+            <router-link :to="{ name: 'Login' }" class="nav-link">Déjà membre</router-link>
           </li>
+          <li class="nav-item">
+            <router-link :to="{ name: 'Registration' }" class="nav-link">Devenir membre</router-link>
+          </li>
+          
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <input

@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 
 // import AddItem from './components/AddItem.vue'
-import Restaurants from './components/Restaurants.vue'
+import Commander from './components/Commander.vue'
 import Registration from './components/Registration.vue'
 import Login from './components/Login.vue'
 import Home from './components/Home.vue'
@@ -52,9 +52,9 @@ const routes = [
       component: Registration
   },
   {
-      name: 'Restaurants',
-      path: '/restaurants',
-      component: Restaurants
+      name: 'Commander',
+      path: '/commander',
+      component: Commander
   },
 ];
 
