@@ -5,40 +5,42 @@
       <div class="md-layout-item md-layout md-gutter">
         <div class="md-layout-item">
           <div class="cloche">
-            <div class="md-layout-item md-layout md-gutter">
-              <div class="md-layout-item md-size-40">
-                <a href="#">
-                  <span>
-                    <img src="../assets/img/icone.png" alt>
-                  </span>
-                </a>
-              </div>
-              <div class="md-layout-item md-size-35">
+            <a href="#">
+              <span>
+                <!-- <img src="../assets/img/hd.png" class="animated bounce infinite" id="animated-img1" alt="hors d'oeuvre"> -->
                 <h4>Hors d'oeuvre</h4>
-              </div>
-            </div>
+              </span>
+            </a>
           </div>
         </div>
         <div class="md-layout-item">
           <div class="cloche-icon">
-            <img src="../assets/img/icone.png" alt>
+            <a href="#">
+              <span>
+                <!-- <img src="../assets/img/plats.png" alt="plats"> -->
+                <h4>Plats</h4>
+              </span>
+            </a>
           </div>
         </div>
         <div class="md-layout-item">
           <div class="cloche-icon">
-            <img src="../assets/img/icone.png" alt>
+            <a href="#">
+              <span>
+                <!-- <img src="../assets/img/dessert.png" alt="dessert"> -->
+                <h4>Desserts</h4>
+              </span>
+            </a>
           </div>
         </div>
       </div>
-      <div class="md-layout-item md-size-40">
-        <p class="titre">Liste des commandes</p>
-      </div>
+      <div class="md-layout-item md-size-40"></div>
     </div>
     <div class="md-layout md-gutter command-list">
       <div class="md-layout-item md-layout md-gutter">
         <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100">
           <div class="md-card md-theme-default">
-            <div class="md-card-header" data-background-color="green">
+            <div class="md-card-header" data-background-color="grey">
               <h4 class="title">Liste des HORS D'OEUVRE</h4>
               <p class="category">Cliquer pour passer commande</p>
             </div>
@@ -46,7 +48,7 @@
               <div>
                 <div
                   class="md-content md-table md-theme-default"
-                  table-header-color="green"
+                  table-header-color="grey"
                   value="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
                 >
                   <!---->
@@ -74,48 +76,18 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr class="md-table-row">
+                        <tr  class="md-table-row" v-for="(plat,index) in plats" :key="index" @click="addCommande(plat)">
                           <!---->
                           <td class="md-table-cell">
                             <div class="md-table-cell-container">
-                              <img src="../assets/img/default-food.jpg">
+                              <img :src="`${plat.image}`">
                             </div>
                           </td>
                           <td class="md-table-cell">
-                            <div class="md-table-cell-container">Henakisoa sy Ravitoto</div>
+                            <div class="md-table-cell-container">{{plat.designation}}</div>
                           </td>
                           <td class="md-table-cell">
-                            <div class="md-table-cell-container">$78,615</div>
-                          </td>
-                        </tr>
-                        <tr class="md-table-row">
-                          <!---->
-                          <td class="md-table-cell">
-                            <div class="md-table-cell-container">
-                              <img src="../assets/img/default-food-1.jpeg">
-                            </div>
-                          </td>
-                          <td class="md-table-cell">
-                            <div
-                              class="md-table-cell-container"
-                            >Henakisoa sy Ravitoto misy sauce kabaro</div>
-                          </td>
-                          <td class="md-table-cell">
-                            <div class="md-table-cell-container">$78,615</div>
-                          </td>
-                        </tr>
-                        <tr class="md-table-row">
-                          <!---->
-                          <td class="md-table-cell">
-                            <div class="md-table-cell-container">
-                              <img src="../assets/img/default-food.jpg">
-                            </div>
-                          </td>
-                          <td class="md-table-cell">
-                            <div class="md-table-cell-container">Henakisoa sy Ravitoto</div>
-                          </td>
-                          <td class="md-table-cell">
-                            <div class="md-table-cell-container">$78,615</div>
+                            <div class="md-table-cell-container">{{plat.prix}}</div>
                           </td>
                         </tr>
                       </tbody>
@@ -131,7 +103,7 @@
         <div class="commande">
           <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100 sticky-top">
             <div class="md-card md-theme-default">
-              <div class="md-card-header" data-background-color="green">
+              <div class="md-card-header" data-background-color="grey">
                 <h4 class="title">Liste des commandes</h4>
                 <p class="category">Cliquer le nombre pour modifier</p>
               </div>
@@ -139,7 +111,7 @@
                 <div class="sticky">
                   <div
                     class="md-content md-table md-theme-default"
-                    table-header-color="green"
+                    table-header-color="grey"
                     value="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
                   >
                     <div class="md-content md-table-content md-scrollbar md-theme-default">
@@ -169,19 +141,19 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr class="md-table-row">
+                          <tr class="md-table-row" v-for="(commande,index) in commandes " :key="index">
                             <td class="md-table-cell" contenteditable="true">
-                              <div class="md-table-cell-container">2</div>
+                              <div class="md-table-cell-container">{{commande.quantite}}</div>
                             </td>
                             <td class="md-table-cell">
-                              <div class="md-table-cell-container">Henakisoa sy vandrobory</div>
+                              <div class="md-table-cell-container">{{commande.designation}}</div>
                             </td>
                             <td class="md-table-cell">
-                              <div class="md-table-cell-container">$36,738</div>
+                              <div class="md-table-cell-container">{{commande.prix}}</div>
                             </td>
                             <td class="md-table-cell">
                               <md-icon>
-                                <a href="#">
+                                <a href="#" @click="removeCommande(commande)">
                                   <img src="../assets/img/close-circle.png">
                                 </a>
                               </md-icon>
@@ -207,29 +179,58 @@ export default {
   name: "nav-tabs-table",
   data() {
     return {
-      selected: [],
-      users: [
+      plats: [
         {
+          id: "1",
           nombre: "2",
           designation: "Henakisoa sy ravitoto",
-          prix: "2000"
+          prix: "2000",
+          image: "../assets/img/default-food.jpg"
         },
         {
+          id: "2",
           nombre: "1",
           designation: "Trondro saosy",
-          prix: "3000"
+          prix: "3000",
+          image: "../assets/img/default-food-1.jpeg"
         },
         {
+          id: "3",
           nombre: "1",
           designation: "Akoho rony",
-          prix: "2000"
+          prix: "2000",
+          image: "../assets/img/default-food.jpg"
         }
-      ]
+      ],
+      commandes: []
     };
   },
   methods: {
     onSelect: function(items) {
       this.selected = items;
+    },
+
+    addCommande: function(item) {
+      var existingID = this.commandes.find(el => (el.id == item.id));
+      if (existingID) {
+        existingID.quantite = Number(existingID.quantite) + 1;
+      } else {
+        this.commandes.push({
+          id: item.id,
+          quantite: 1,
+          designation: item.designation,
+          prix: item.prix
+        });
+      }
+    },
+
+    removeCommande: function(item){
+      if(this.commandes && this.commandes.length > 0){
+        var index = this.commandes.findIndex(el => (el.id == item.id));
+        if (index >= 0) {
+          this.commandes.splice(index, 1);
+        }
+      }
     }
   }
 };
@@ -249,6 +250,11 @@ export default {
   margin-right: 10px !important;
 
   text-align: center !important;
+}
+
+.md-layout-item img {
+  height: 45 !important;
+  widows: auto !important;
 }
 
 .commande {
@@ -276,7 +282,7 @@ export default {
 }
 
 .cloche-icon {
-  max-width: 40px !important;
+  // max-width: 40px !important;
 }
 </style>
 
