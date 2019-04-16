@@ -161,6 +161,12 @@
                           </tr>
                         </tbody>
                       </table>
+                      <div class="total-commande" >
+                        <h4 id="totalCommande">Total commande : {{prixTotal()}}</h4>
+                      </div>
+                      <div class="submitCommande">
+                        <input type="button" value="Commander" class="btn btn-secondary">
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -214,12 +220,14 @@ export default {
       var existingID = this.commandes.find(el => (el.id == item.id));
       if (existingID) {
         existingID.quantite = Number(existingID.quantite) + 1;
+        existingID.prixCommande = Number(existingID.quantite) * item.prix;
       } else {
         this.commandes.push({
           id: item.id,
           quantite: 1,
           designation: item.designation,
-          prix: item.prix
+          prix: item.prix,
+          prixCommande : item.prix
         });
       }
     },
@@ -231,7 +239,18 @@ export default {
           this.commandes.splice(index, 1);
         }
       }
+    },
+    prixTotal : function(){
+      var prixCommande = 0;
+      if(this.commandes && this.commandes.length > 0){
+        this.commandes.map((commande,index) => { 
+            prixCommande += Number(commande.prixCommande); 
+        })
+        //prixCommande = this.commandes.reduce((current, next) => Number(current.prixCommande) + Number(next.prixCommande))
+      }
+      return prixCommande;
     }
+
   }
 };
 </script>
@@ -283,6 +302,10 @@ export default {
 
 .cloche-icon {
   // max-width: 40px !important;
+}
+
+.submitCommande{
+  float: right;
 }
 </style>
 
