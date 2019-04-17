@@ -76,7 +76,12 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr  class="md-table-row" v-for="(plat,index) in plats" :key="index" @click="addCommande(plat)">
+                        <tr
+                          class="md-table-row"
+                          v-for="(plat,index) in plats"
+                          :key="index"
+                          @click="addCommande(plat)"
+                        >
                           <!---->
                           <td class="md-table-cell">
                             <div class="md-table-cell-container">
@@ -141,10 +146,15 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr class="md-table-row" v-for="(commande,index) in commandes " :key="index">
-                            <td class="md-table-cell" contenteditable="true">
+                          <tr
+                            class="md-table-row"
+                            v-for="(commande,index) in commandes "
+                            :key="index"
+                          >
+                            <td class="md-table-cell">
                               <div class="md-table-cell-container">{{commande.quantite}}</div>
                             </td>
+
                             <td class="md-table-cell">
                               <div class="md-table-cell-container">{{commande.designation}}</div>
                             </td>
@@ -161,8 +171,8 @@
                           </tr>
                         </tbody>
                       </table>
-                      <div class="total-commande" >
-                        <h4 id="totalCommande">Total commande : {{prixTotal()}}</h4>
+                      <div class="total-commande">
+                        <h4 id="totalCommande">Total commande : {{prixCommande}}</h4>
                       </div>
                       <div class="submitCommande">
                         <input type="button" value="Commander" class="btn btn-secondary">
@@ -180,11 +190,14 @@
 </template>
 
 <script>
+import { constants } from "crypto";
 export default {
   //   name: "LayoutHorizontalGutter"
+
   name: "nav-tabs-table",
   data() {
     return {
+      _prixCommande: 0,
       plats: [
         {
           id: "1",
@@ -208,16 +221,32 @@ export default {
           image: "../assets/img/default-food.jpg"
         }
       ],
+      commandeQte: 0,
       commandes: []
     };
+  },
+  computed: {
+    prixCommande: {
+      get: function() {
+        // var results = 0;
+        if (this.commandes && this.commandes.length > 0) {
+          this._prixCommande = this.commandes
+            .map(item => item.prixCommande)
+            .reduce((c, n) => Number(c) + Number(n));
+        }
+        return this._prixCommande;
+      },
+      set: function(newValue) {
+        this._prixCommande = newValue;
+      }
+    }
   },
   methods: {
     onSelect: function(items) {
       this.selected = items;
     },
-
     addCommande: function(item) {
-      var existingID = this.commandes.find(el => (el.id == item.id));
+      var existingID = this.commandes.find(el => el.id == item.id);
       if (existingID) {
         existingID.quantite = Number(existingID.quantite) + 1;
         existingID.prixCommande = Number(existingID.quantite) * item.prix;
@@ -227,36 +256,35 @@ export default {
           quantite: 1,
           designation: item.designation,
           prix: item.prix,
-          prixCommande : item.prix
+          prixCommande: item.prix
         });
       }
     },
-
-    removeCommande: function(item){
-      if(this.commandes && this.commandes.length > 0){
-        var index = this.commandes.findIndex(el => (el.id == item.id));
-        if (index >= 0) {
+    removeCommande: function(item) {
+      var existingID = this.commandes.find(el => el.id == item.id);
+      if (existingID) {
+        existingID.quantite = Number(existingID.quantite) - 1;
+        existingID.prixCommande = Number(existingID.quantite) * item.prix;
+        if (existingID.quantite <= 0) {
+          var index = this.commandes.findIndex(el => el.id == item.id);
+          this._prixCommande = 0;
           this.commandes.splice(index, 1);
         }
+      } else {
+        this.commandes.push({
+          id: item.id,
+          quantite: 1,
+          designation: item.designation,
+          prix: item.prix,
+          prixCommande: item.prix
+        });
       }
-    },
-    prixTotal : function(){
-      var prixCommande = 0;
-      if(this.commandes && this.commandes.length > 0){
-        this.commandes.map((commande,index) => { 
-            prixCommande += Number(commande.prixCommande); 
-        })
-        //prixCommande = this.commandes.reduce((current, next) => Number(current.prixCommande) + Number(next.prixCommande))
-      }
-      return prixCommande;
     }
-
   }
 };
 </script>
 
 <style lang="scss" scoped>
-//@import "~vue-material/theme/engine";
 .md-table-cell-container img {
   max-width: 400px !important;
 }
@@ -304,7 +332,7 @@ export default {
   // max-width: 40px !important;
 }
 
-.submitCommande{
+.submitCommande {
   float: right;
 }
 </style>
