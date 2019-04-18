@@ -7,7 +7,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Commander',
+      name: 'commander',
       component: Commander
     },
     {
