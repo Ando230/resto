@@ -36,7 +36,8 @@
       </div>
       <div class="md-layout-item md-size-40"></div>
     </div>
-    <div class="md-layout md-gutter command-list">
+    
+    <div class="md-layout md-gutter command-list row">
       <div class="md-layout-item md-layout md-gutter">
         <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100">
           <div class="md-card md-theme-default">
@@ -85,7 +86,7 @@
                           <!---->
                           <td class="md-table-cell">
                             <div class="md-table-cell-container">
-                              <img :src="'${plat.image}'">
+                              <img :src="`${plat.image}`">
                             </div>
                           </td>
                           <td class="md-table-cell">
@@ -186,6 +187,25 @@
         </div>
       </div>
     </div>
+    <div class="pagination-container row">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" href="#">Previous</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">Next</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -215,6 +235,20 @@ export default {
         },
         {
           id: "3",
+          nombre: "1",
+          designation: "Akoho rony",
+          prix: "2000",
+          image: "../assets/img/default-food.jpg"
+        },
+        {
+          id: "4",
+          nombre: "1",
+          designation: "Akoho rony",
+          prix: "2000",
+          image: "../assets/img/default-food.jpg"
+        },
+        {
+          id: "5",
           nombre: "1",
           designation: "Akoho rony",
           prix: "2000",
@@ -334,6 +368,12 @@ export default {
 
 .submitCommande {
   float: right;
+}
+
+.pagination-container{
+  position:fixed;
+  margin-top: 370px;
+  margin-left: 10px;
 }
 </style>
 
