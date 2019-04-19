@@ -12,6 +12,9 @@
           <li class="nav-item">
             <router-link :to="{ name: 'Registration' }" class="nav-link">Devenir membre</router-link>
           </li>
+          <li class="nav-item">
+            <router-link :to="{ name: 'InsertPlat' }" class="nav-link">Insert plat</router-link>
+          </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <input

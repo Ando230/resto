@@ -85,7 +85,7 @@
                           <!---->
                           <td class="md-table-cell">
                             <div class="md-table-cell-container">
-                              <img :src="`${plat.image}`">
+                              <img :src="'${plat.image}'">
                             </div>
                           </td>
                           <td class="md-table-cell">

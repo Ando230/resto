@@ -6,6 +6,7 @@ import App from './App.vue'
 import Commander from './components/Commander.vue'
 import Registration from './components/Registration.vue'
 import Login from './components/Login.vue'
+import InsetPlat from './components/InsertPlat.vue'
 
 // MaterialDashboard plugin
 import MaterialDashboard from "./material-dashboard";
@@ -31,6 +32,16 @@ const routes = [
       path: '/commander',
       component: Commander
   },
+  {
+    name: 'Commander',
+    path: '/',
+    component: Commander
+  },
+  {
+    name: 'InsertPlat',
+    path: '/insertplat',
+    component: InsetPlat
+  }
 ];
 
 const router = new VueRouter({ mode: 'history', routes: routes });
