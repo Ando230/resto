@@ -1,0 +1,81 @@
+<template>
+<!-- recherche par nom et specialité -->
+<div class="recherche">
+
+</div>
+<div class="listrestaurant">
+    <div class="md-layout-item md-layout md-gutter">
+        <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100">
+          <div class="md-card md-theme-default">
+            <div class="md-card-header" data-background-color="grey">
+              <h4 class="title">Liste des HORS D'OEUVRE</h4>
+              <p class="category">Cliquer pour passer commande</p>
+            </div>
+            <div class="md-card-content">
+              <div>
+                <div
+                  class="md-content md-table md-theme-default"
+                  table-header-color="grey"
+                  value="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
+                >
+                  <!---->
+                  <!---->
+                  <div class="md-content md-table-content md-scrollbar md-theme-default">
+                    <table>
+                      <thead>
+                        <tr>
+                          <!---->
+                          <th class="md-table-head">
+                            <div class="md-table-head-container md-ripple md-disabled">
+                              <div class="md-table-head-label">Photo</div>
+                            </div>
+                          </th>
+                          <th class="md-table-head">
+                            <div class="md-table-head-container md-ripple md-disabled">
+                              <div class="md-table-head-label">Designation</div>
+                            </div>
+                          </th>
+                          <th class="md-table-head">
+                            <div class="md-table-head-container md-ripple md-disabled">
+                              <div class="md-table-head-label">Prix</div>
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          class="md-table-row"
+                          v-for="(plat,index) in plats"
+                          :key="index"
+                          @click="addCommande(plat)"
+                        >
+                          <!---->
+                          <td class="md-table-cell">
+                            <div class="md-table-cell-container">
+                              <img :src="`${plat.image}`">
+                            </div>
+                          </td>
+                          <td class="md-table-cell">
+                            <div class="md-table-cell-container">{{plat.designation}}</div>
+                          </td>
+                          <td class="md-table-cell">
+                            <div class="md-table-cell-container">{{plat.prix}}</div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+    
+</template>
+<script>
+export default {
+    
+}
+</script>
