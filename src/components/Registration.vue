@@ -1,7 +1,7 @@
 <template>
     <div id="container" class="md-layout md-alignment-top-center">
     <div class="md-layout-item md-size-50">
-      <form class="login-form" v-on:submit.prevent="addItem">
+      <form class="login-form" v-on:submit.prevent="inscription">
         <md-card>
           <md-card-header :data-background-color="dataBackgroundColor">
             <h3 class="title">Inscription</h3>
@@ -64,8 +64,8 @@ export default {
     return {
       listUtilisateurFirebase:[],
       listUtilisateurFront:[],
-      _utilisateurs:[],
       utilisateur: {
+        idUtilisateur: "",
         username: "",
         adresse: "",
         password: "",
@@ -88,10 +88,10 @@ export default {
   },
   methods: {
     pseudoExistant(pseudo) {
-        var isTrue =  this.listUtilisateurFront.some(item => item.username ==pseudo);
-        return isTrue;
+        var result =  this.listUtilisateurFront.some(item => item.username ==pseudo);
+        return result;
     },
-    addItem(event) {
+    inscription(event) {
       var mdp1 = document.getElementById("mdp1").value;
       var mdp2 = document.getElementById("mdp2").value;
       if(mdp1 != null && mdp1.length >= 5)
@@ -112,7 +112,8 @@ export default {
                   var this_s = this;
                   uploadTask.on("state_changed", function progress(snapshot) {
                       storageRef.getDownloadURL().then(function(url) {
-                          this_s.$firebaseRefs.items.push({
+                          this_s.$firebaseRefs.listUtilisateurFirebase.push({
+                              idUtilisateur: SHA256(this_s.utilisateur.username),
                               username: this_s.utilisateur.username,
                               adresse: this_s.utilisateur.adresse,
                               password: SHA256(this_s.utilisateur.password),
@@ -123,6 +124,7 @@ export default {
                           this_s.utilisateur.password = '';
                           this_s.utilisateur.photo = '';
                           this_s.$router.push("/login");
+                          return;
                       });
                   });
                   }
@@ -146,6 +148,7 @@ export default {
         alert("Votre mot de passe trop court. ça doit comporter au moins 5 caractère ");
       }
       this.$router.push("/registration");
+      return;
     }
   }
 };

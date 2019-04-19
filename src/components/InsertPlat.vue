@@ -60,12 +60,13 @@ export default {
           var firstFile = fileUpload.files[0]; // get the first file uploaded
           var uploadTask = storageRef.put(firstFile);
           var this_s = this;
+          var daty = new Date().getTime().toString();
           uploadTask.on("state_changed", function progress(snapshot) {
               storageRef.getDownloadURL().then(function(url) {
                 if(this_s != null && this_s.$firebaseRefs != null && this_s.$firebaseRefs.items != null)
                 {
                   this_s.$firebaseRefs.items.push({
-                      id : SHA256(url),
+                      id : SHA256(daty),
                       nom: this_s.plat.nom,
                       designation: this_s.plat.designation,
                       prix: this_s.plat.prix,
