@@ -8,6 +8,7 @@ import Commander from './components/Commander.vue'
 import Registration from './components/Registration.vue'
 import Login from './components/Login.vue'
 import InsetPlat from './components/InsertPlat.vue'
+import InsertResto from './components/InsertResto.vue'
 
 // MaterialDashboard plugin
 import MaterialDashboard from "./material-dashboard";
@@ -42,12 +43,17 @@ const routes = [
     name: 'InsertPlat',
     path: '/insertplat',
     component: InsetPlat
-  }
+  },
   {
     name: 'Restaurant',
     path: '/restaurant',
     component: Restaurant
-  }
+  },
+  {
+    name: 'InsertResto',
+    path: '/insertresto',
+    component: InsertResto
+  },
 ];
 
 const router = new VueRouter({ mode: 'history', routes: routes });
