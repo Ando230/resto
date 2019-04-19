@@ -4,6 +4,9 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
+            <router-link :to="{ name: 'Restaurant' }" class="nav-link">Restaurant</router-link>
+          </li>
+          <li class="nav-item">
             <router-link :to="{ name: 'Commander' }" class="nav-link">Commander</router-link>
           </li>
           <li class="nav-item">
