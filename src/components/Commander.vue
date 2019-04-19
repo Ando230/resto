@@ -76,16 +76,11 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr
-                          class="md-table-row"
-                          v-for="(plat,index) in plats"
-                          :key="index"
-                          @click="addCommande(plat)"
-                        >
+                         <tr v-for="plat of plats" :key="plat['.key']" @click="addCommande(plat)">
                           <!---->
                           <td class="md-table-cell">
                             <div class="md-table-cell-container">
-                              <img :src="'${plat.image}'">
+                              <img v-bind:src="plat.image">
                             </div>
                           </td>
                           <td class="md-table-cell">
@@ -149,7 +144,7 @@
                           <tr
                             class="md-table-row"
                             v-for="(commande,index) in commandes "
-                            :key="index"
+                            :key="index" commande.id = index
                           >
                             <td class="md-table-cell">
                               <div class="md-table-cell-container">{{commande.quantite}}</div>
@@ -190,7 +185,10 @@
 </template>
 
 <script>
+
+import { db } from '../config/db';
 import { constants } from "crypto";
+
 export default {
   //   name: "LayoutHorizontalGutter"
 
@@ -198,32 +196,13 @@ export default {
   data() {
     return {
       _prixCommande: 0,
-      plats: [
-        {
-          id: "1",
-          nombre: "2",
-          designation: "Henakisoa sy ravitoto",
-          prix: "2000",
-          image: "../assets/img/default-food.jpg"
-        },
-        {
-          id: "2",
-          nombre: "1",
-          designation: "Trondro saosy",
-          prix: "3000",
-          image: "../assets/img/default-food-1.jpeg"
-        },
-        {
-          id: "3",
-          nombre: "1",
-          designation: "Akoho rony",
-          prix: "2000",
-          image: "../assets/img/default-food.jpg"
-        }
-      ],
+      plats: [],
       commandeQte: 0,
       commandes: []
     };
+  },
+  firebase: {
+    plats : db.ref('plat')
   },
   computed: {
     prixCommande: {
@@ -287,6 +266,7 @@ export default {
 <style lang="scss" scoped>
 .md-table-cell-container img {
   max-width: 400px !important;
+  max-height: 150px !important;
 }
 .md-layout-item {
   height: 40px;
@@ -336,13 +316,3 @@ export default {
   float: right;
 }
 </style>
-
-             
-            //  <md-table-cell md-label="supprimer">
-            //     <md-button class="md-just-icon md-simple md-danger">
-            //       <md-icon>
-            //         <img src="../assets/img/close-circle.png">
-            //       </md-icon>
-            //       <md-tooltip md-direction="top">Supprimer</md-tooltip>
-            //     </md-button>
-            //   </md-table-cell>

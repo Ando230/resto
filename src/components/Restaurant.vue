@@ -38,26 +38,32 @@
                               <div class="md-table-head-label">Spécialité</div>
                             </div>
                           </th>
+                          <th class="md-table-head">
+                            <div class="md-table-head-container md-ripple md-disabled">
+                              <div class="md-table-head-label">Adresse</div>
+                            </div>
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr
                           class="md-table-row"
-                          v-for="(plat,index) in plats"
-                          :key="index"
-                          @click="addCommande(plat)"
+                          v-for="restaurant of restaurants" :key="restaurant['.key']"
                         >
                           <!---->
                           <td class="md-table-cell">
-                            <div class="md-table-cell-container">
-                              <img :src="`${plat.image}`">
+                            <div class="md-table-cell-container" >
+                              <img v-bind:src="restaurant.image">
                             </div>
                           </td>
                           <td class="md-table-cell">
-                            <div class="md-table-cell-container">{{plat.designation}}</div>
+                            <div class="md-table-cell-container">{{restaurant.nom}}</div>
                           </td>
                           <td class="md-table-cell">
-                            <div class="md-table-cell-container">{{plat.prix}}</div>
+                            <div class="md-table-cell-container">{{restaurant.specialite}}</div>
+                          </td>
+                          <td class="md-table-cell">
+                            <div class="md-table-cell-container">{{restaurant.adresse}}</div>
                           </td>
                         </tr>
                       </tbody>
@@ -73,5 +79,27 @@
   </div>
 </template>
 <script>
-export default {};
+
+
+import { db } from '../config/db';
+
+export default {
+
+    data() {
+      return {
+        restaurants: []
+      };
+    },
+    firebase: {
+      restaurants : db.ref('restaurant')
+    }
+
+};
 </script>
+
+<style lang="scss" scoped>
+.md-table-cell-container img {
+  max-width: 400px !important;
+  max-height: 150px !important;
+}
+</style>
