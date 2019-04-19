@@ -11,7 +11,7 @@
             <div class="md-layout-item md-small-size-100 md-size-100">
               <md-field>
                 <label>Pseudo</label>
-                <md-input v-model="utilisateur.username" type="text"></md-input>
+                <md-input id="idUsername" v-model="utilisateur.username" type="text"></md-input>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100 md-size-100">
@@ -44,6 +44,7 @@
         </md-card>
       </form>
     </div>
+    <i class="page-item"  v-for="utilisateur of triggerListUser" :key="utilisateur['.key']"></i>
   </div>
 </template>
 <script>
@@ -61,6 +62,9 @@ export default {
   },
   data() {
     return {
+      listUtilisateurFirebase:[],
+      listUtilisateurFront:[],
+      _utilisateurs:[],
       utilisateur: {
         username: "",
         adresse: "",
@@ -70,9 +74,23 @@ export default {
     };
   },
   firebase: {
-    items: db.ref("utilisateur")
+    listUtilisateurFirebase: db.ref('utilisateur')
+  },
+  computed: {
+    triggerListUser: {
+      get: function() {
+        this.listUtilisateurFront =  this.listUtilisateurFirebase;
+      },
+      set: function(newValue) {
+        this.listUtilisateurFront =  this.listUtilisateurFirebase;
+      }
+    }
   },
   methods: {
+    pseudoExistant(pseudo) {
+        var isTrue =  this.listUtilisateurFront.some(item => item.username ==pseudo);
+        return isTrue;
+    },
     addItem(event) {
       var mdp1 = document.getElementById("mdp1").value;
       var mdp2 = document.getElementById("mdp2").value;
@@ -80,32 +98,42 @@ export default {
       {
           if(mdp1 === mdp2)
           {
-            var fileUpload = document.getElementById("fileUpload");
-            if(fileUpload !== null && fileUpload.files != null && fileUpload.files.length != 0){
-                var path = "imagenes/" + fileUpload.files[0].name;
-                var storageRef = storage.ref(path);
-                var firstFile = fileUpload.files[0]; // get the first file uploaded
-                var uploadTask = storageRef.put(firstFile);
-                var this_s = this;
-                uploadTask.on("state_changed", function progress(snapshot) {
-                    storageRef.getDownloadURL().then(function(url) {
-                        this_s.$firebaseRefs.items.push({
-                            username: this_s.utilisateur.username,
-                            adresse: this_s.utilisateur.adresse,
-                            password: SHA256(this_s.utilisateur.password),
-                            photo: url,
-                        })
-                        this_s.utilisateur.username = '';
-                        this_s.utilisateur.adresse = '';
-                        this_s.utilisateur.password = '';
-                        this_s.utilisateur.photo = '';
-                        this_s.$router.push("/login");
-                    });
-                });
+            var pseudoToTest = document.getElementById("idUsername").value;
+            var pseudoExiste = this.pseudoExistant(pseudoToTest);
+            if(!pseudoExiste) 
+            {
+                var fileUpload = document.getElementById("fileUpload");
+                if(fileUpload !== null && fileUpload.files != null && fileUpload.files.length != 0)
+                {
+                  var path = "imagenes/" + fileUpload.files[0].name;
+                  var storageRef = storage.ref(path);
+                  var firstFile = fileUpload.files[0]; // get the first file uploaded
+                  var uploadTask = storageRef.put(firstFile);
+                  var this_s = this;
+                  uploadTask.on("state_changed", function progress(snapshot) {
+                      storageRef.getDownloadURL().then(function(url) {
+                          this_s.$firebaseRefs.items.push({
+                              username: this_s.utilisateur.username,
+                              adresse: this_s.utilisateur.adresse,
+                              password: SHA256(this_s.utilisateur.password),
+                              photo: url,
+                          })
+                          this_s.utilisateur.username = '';
+                          this_s.utilisateur.adresse = '';
+                          this_s.utilisateur.password = '';
+                          this_s.utilisateur.photo = '';
+                          this_s.$router.push("/login");
+                      });
+                  });
+                  }
+                else
+                {
+                    alert("Vous devez choisir un photo pour votre profil!");
+                }
             }
             else
             {
-                alert("Vous devez choisir un photo pour votre profil!");
+                alert("Ce pseudo existe déja. Vous devez choisir un autre!");
             }
           }
           else
