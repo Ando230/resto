@@ -21,6 +21,9 @@
           <li class="nav-item">
             <router-link :to="{ name: 'InsertResto' }" class="nav-link">Insert resto</router-link>
           </li>
+          <li class="nav-item">
+            <a @click="deconnexion(event)" href="#" class="nav-link">Deconnexion</a>
+          </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <input
@@ -45,6 +48,14 @@
 
 <script>
 export default {
-  name: "app"
+  name: "app",
+
+  methods: {
+    deconnexion(event) {
+      window.sessionStorage.clear();
+      this.$router.push("/login");
+      return;
+    }
+  }
 };
 </script>
