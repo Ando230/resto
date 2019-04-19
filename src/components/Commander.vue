@@ -171,7 +171,7 @@
                         <h4 id="totalCommande">Total commande : {{prixCommande}}</h4>
                       </div>
                       <div class="submitCommande">
-                        <input type="button" value="Commander" class="btn btn-secondary">
+                        <input  @click="commander(commande)" type="button" value="Commander" class="btn btn-secondary">
                       </div>
                     </div>
                   </div>
@@ -277,6 +277,18 @@ export default {
           prix: item.prix,
           prixCommande: item.prix
         });
+      }
+    },
+    commander: function(item) {
+      var loggedUser = window.sessionStorage.getItem("loggedUser");
+      debugger;
+      if(loggedUser!=null)
+      {
+        alert("Peut commander");
+      }
+      else
+      {
+        alert("Vous devez vous connécter ou bien créer un compte pour passer une commande");
       }
     }
   }
