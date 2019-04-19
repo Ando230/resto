@@ -48,7 +48,7 @@
                       <tbody>
                         <tr
                           class="md-table-row"
-                          v-for="restaurant of restaurants" :key="restaurant['.key']"
+                          v-for="restaurant of listRestaurants" :key="restaurant['.key']"
                         >
                           <!---->
                           <td class="md-table-cell">
@@ -78,20 +78,8 @@
     </div>
     <div class="container">
       <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" href="#">Previous</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">1</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">3</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">Next</a>
+        <li class="page-item"  v-for="pagination of listPaginations" :key="pagination['.key']">
+          <a class="page-link" @click="navigateIndex(pagination.value)" href="#">{{pagination.value}}</a>
         </li>
       </ul>
     </div>
@@ -103,15 +91,67 @@
 import { db } from '../config/db';
 
 export default {
-
     data() {
       return {
-        restaurants: []
+        _resto:[],
+        restaurants:[],
+        paginations:[],
+        paginationIndex: 0
       };
     },
     firebase: {
       restaurants : db.ref('restaurant')
-    }
+    },
+    computed: {
+      listRestaurants: {
+        get: function() {
+          var resto =  this.restaurants;
+          var nbrResto = Math.trunc((resto.length / 5) + 1);
+          var index0 = this.paginationIndex * 5;
+          var index1 = index0 + 5;
+          return resto.slice(index0, index1);
+        },
+        set: function(newValue) {
+          var resto =  this.restaurants;
+          var nbrResto = Math.trunc((resto.length / 5) + 1);
+          var index0 = this.paginationIndex * 5;
+          var index1 = index0 + 5;
+          return resto.slice(index0, index1);
+        }
+    },
+      listPaginations: {
+        get: function() {
+          var resto =  this.restaurants;
+          var nbrResto = Math.trunc((resto.length / 5) + 1);
+          this.paginations = [];
+          for(var i = 1; i <= nbrResto; i++)
+          {
+              this.paginations.push({value: i});
+          }
+          return this.paginations;
+        },
+        set: function() {
+          var resto =  this.restaurants;
+          var nbrResto = Math.trunc((resto.length / 5) + 1);
+          this.paginations = [];
+          for(var i = 1; i <= nbrResto; i++)
+          {
+              this.paginations.push({value: i});
+          }
+          return this.paginations;
+        }
+      },
+  },
+  methods : {
+     navigateIndex: function(value) {
+       this.paginationIndex = (value - 1);
+       var page = this.paginationIndex;
+       var index0 = this.paginationIndex * 5;
+       var index1 = index0 + 5;
+       var restoSlice = this.restaurants.slice(index0, index1); 
+       this.listRestaurants = restoSlice;
+     }
+  }
 
 };
 </script>
