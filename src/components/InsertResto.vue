@@ -1,67 +1,42 @@
 <template>
-    <div id="container" class="md-layout md-alignment-top-center">
-    <div class="md-layout-item md-size-50">
+    <div id="container">
       <form class="login-form" v-on:submit.prevent="addItem">
-        <md-card>
-          <md-card-header :data-background-color="dataBackgroundColor">
-            <h3 class="title">Inscription</h3>
-            <p class="category">Bénéficier des avantages des membres</p>
-          </md-card-header>
-          <md-card-content>
-            <div class="md-layout-item md-small-size-100 md-size-100">
-              <md-field>
+            <div class="form-group">
                 <label>nom</label>
-                <md-input v-model="restaurant.nom" type="text"></md-input>
-              </md-field>
+                <input type="text" v-model="plat.nom" />
             </div>
-            <div class="md-layout-item md-small-size-100 md-size-100">
-              <md-field>
+            <div class="form-group">
                 <label>description</label>
-                <md-input v-model="restaurant.description" type="text"></md-input>
-              </md-field>
+                <input v-model="plat.designation" type="text">
             </div>
-            <div class="md-layout-item md-small-size-100 md-size-100">
-              <md-field>
+            <div class="form-group">
                 <label>typecuisine</label>
-                <md-input v-model="restaurant.typecuisine" type="text"></md-input>
-              </md-field>
+                <input v-model="plat.prix" type="text">
             </div>
-
-            <div class="md-layout-item md-small-size-100 md-size-100">
-              <md-field>
+            <div class="form-group">
                 <label>adresse</label>
-                <md-input v-model="restaurant.adresse" type="text"></md-input>
-              </md-field>
+                <input v-model="plat.prix" type="text">
             </div>
-            <div class="md-layout-item md-small-size-100 md-size-100">
-              <md-field>
+            <div class="form-group">
                 <label>telephone</label>
-                <md-input v-model="restaurant.telephone" type="text"></md-input>
-              </md-field>
+                <input v-model="plat.prix" type="text">
             </div>
-            <div class="md-layout-item md-small-size-100 md-size-100">
-              <md-field>
+            <div class="form-group">
                 <label>longitude</label>
-                <md-input v-model="restaurant.longitude" type="text"></md-input>
-              </md-field>
+                <input v-model="plat.prix" type="text">
             </div>
-            <div class="md-layout-item md-small-size-100 md-size-100">
-              <md-field>
+            <div class="form-group">
                 <label>latitude</label>
-                <md-input v-model="restaurant.latitude" type="text"></md-input>
-              </md-field>
+                <input v-model="plat.prix" type="text">
             </div>
             <div class="form-group">
               <label>Upload Photo:</label>
               <input type="file" id="fileUpload" multiple accept="image/*">
             </div>
-            <div class="md-layout-item md-size-100 text-right">
-              <md-button type="submit" class="md-raised md-success">Inserer</md-button>
+            <div>
+              <input type="submit" class="md-raised md-success" value="Inserer">
             </div>
-          </md-card-content>
-        </md-card>
-      </form>
-    </div>
+        </form>
   </div>
 </template>
 <script>
@@ -122,7 +97,7 @@ export default {
                   this_s.restaurant.telephone = '';
                   this_s.restaurant.longitude = '';
                   this_s.restaurant.latitude = '';
-                  this_s.$router.push("/InsertResto");
+                  this_s.$router.push("/Restaurant");
               });
           });
       }
