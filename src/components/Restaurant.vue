@@ -48,7 +48,7 @@
                       <tbody>
                         <tr
                           class="md-table-row"
-                          v-for="restaurant of listRestaurants" :key="restaurant['.key']"
+                          v-for="restaurant of listRestaurants" :key="restaurant['.key']" @click="restoClick()"
                         >
                           <!---->
                           <td class="md-table-cell">
@@ -145,6 +145,10 @@ export default {
       },
   },
   methods : {
+      restoClick: function() {
+        this.$router.push("/");
+        return;
+      },
      navigateIndex: function(value) {
        this.paginationIndex = (value - 1);
        var page = this.paginationIndex;

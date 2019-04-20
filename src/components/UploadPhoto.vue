@@ -40,7 +40,7 @@ export default {
     return {};
   },
   firebase: {
-    firebaseItem: db.ref("platTest")
+    firebaseItem: db.ref("restaurantTest")
   },
   methods: {
     addItem(event) 
