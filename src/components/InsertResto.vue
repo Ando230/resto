@@ -1,47 +1,4 @@
 <template>
-    <!-- <div id="container">
-      <form class="login-form" v-on:submit.prevent="addItem">
-            <div class="form-group">
-                <label>nom</label>
-                <input type="text" v-model="restaurant.nom" />
-            </div>
-            <div class="form-group">
-                <label>description</label>
-                <input v-model="restaurant.description" type="text">
-            </div>
-            <div class="form-group">
-                <label>typecuisine</label>
-                <input v-model="restaurant.typecuisine" type="text">
-            </div>
-            <div class="form-group">
-                <label>adresse</label>
-                <input v-model="restaurant.adresse" type="text">
-            </div>
-            <div class="form-group">
-                <label>specialite</label>
-                <input v-model="restaurant.specialite" type="text">
-            </div>
-            <div class="form-group">
-                <label>telephone</label>
-                <input v-model="restaurant.telephone" type="text">
-            </div>
-            <div class="form-group">
-                <label>longitude</label>
-                <input v-model="restaurant.longitude" type="text">
-            </div>
-            <div class="form-group">
-                <label>latitude</label>
-                <input v-model="restaurant.latitude" type="text">
-            </div>
-            <div class="form-group">
-              <label>Upload Photo:</label>
-              <input type="file" id="fileUpload" multiple accept="image/*">
-            </div>
-            <div>
-              <input type="submit" class="md-raised md-success" value="Inserer">
-            </div>
-        </form>
-  </div> -->
   <div id="container" class="md-layout md-alignment-top-center">
     <div class="md-layout-item md-size-50">
       <form class="login-form" v-on:submit.prevent="addItem">

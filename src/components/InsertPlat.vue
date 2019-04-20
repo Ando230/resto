@@ -1,26 +1,5 @@
 <template>
     <div id="container">
-      <!-- <form class="login-form" v-on:submit.prevent="addItem">
-            <div class="form-group">
-                <label>nom</label>
-                <input type="text" v-model="plat.nom" />
-            </div>
-            <div class="form-group">
-                <label>designation</label>
-                <input v-model="plat.designation" type="text">
-            </div>
-            <div class="form-group">
-                <label>prix</label>
-                <input v-model="plat.prix" type="text">
-            </div>
-            <div class="form-group">
-              <label>Upload Photo:</label>
-              <input type="file" id="fileUpload" multiple accept="image/*">
-            </div>
-            <div>
-              <input type="submit" class="md-raised md-success" value="Inserer">
-            </div>
-        </form> -->
         <div id="container" class="md-layout md-alignment-top-center">
     <div class="md-layout-item md-size-50">
       <form class="login-form" v-on:submit.prevent="addItem">
