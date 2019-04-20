@@ -5,7 +5,7 @@
       <div class="md-layout-item md-layout md-gutter">
         <div class="md-layout-item">
           <div class="cloche">
-            <a href="#">
+            <a href="#" @click="rechercherParType('entree')" >
               <span>
                 <!-- <img src="../assets/img/hd.png" class="animated bounce infinite" id="animated-img1" alt="hors d'oeuvre"> -->
                 <h4>Hors d'oeuvre</h4>
@@ -15,7 +15,7 @@
         </div>
         <div class="md-layout-item">
           <div class="cloche-icon">
-            <a href="#">
+            <a href="#" @click="rechercherParType('plat')">
               <span>
                 <!-- <img src="../assets/img/plats.png" alt="plats"> -->
                 <h4>Plats</h4>
@@ -25,7 +25,7 @@
         </div>
         <div class="md-layout-item">
           <div class="cloche-icon">
-            <a href="#">
+            <a href="#" @click="rechercherParType('dessert')">
               <span>
                 <!-- <img src="../assets/img/dessert.png" alt="dessert"> -->
                 <h4>Desserts</h4>
@@ -36,7 +36,6 @@
       </div>
       <div class="md-layout-item md-size-40"></div>
     </div>
-    
     <div class="md-layout md-gutter command-list row">
       <div class="md-layout-item md-layout md-gutter">
         <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100">
@@ -77,7 +76,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                         <tr v-for="plat of plats" :key="plat['.key']" @click="addCommande(plat)">
+                         <tr v-for="plat of triggerListPlat" :key="plat['.key']" @click="addCommande(plat)">
                           <!---->
                           <td class="md-table-cell">
                             <div class="md-table-cell-container">
@@ -210,19 +209,22 @@ import { db } from '../config/db';
 import { constants } from "crypto";
 
 export default {
-  //   name: "LayoutHorizontalGutter"
-
   name: "nav-tabs-table",
   data() {
     return {
+      listPlatFirebase:[],
+      listPlatFront:[],
       _prixCommande: 0,
-      plats: [],
       commandeQte: 0,
       commandes: []
     };
   },
   firebase: {
-    plats : db.ref('plat')
+    listPlatFirebase : db.ref('plat')
+  },
+  mounted() {
+      this.listPlatFront = [];
+      this.listPlatFront = this.listPlatFirebase;
   },
   computed: {
     prixCommande: {
@@ -238,9 +240,40 @@ export default {
       set: function(newValue) {
         this._prixCommande = newValue;
       }
+    },
+    triggerListPlat: {
+      get: function() {
+        return this.listPlatFront;
+      },
+      set: function(newValue) {
+        this.listPlatFront = newValue;
+      }
     }
   },
   methods: {
+    rechercherParType(typeArgs)
+    {
+      if(typeArgs != null)
+      {
+          var platsLocal = [];
+          this.listPlatFront = [];
+          this.listPlatFront = this.listPlatFirebase;
+          var result = [];
+          for(var obj of this.listPlatFront)
+          {
+            if(obj.type == typeArgs)
+            {
+              result.push(obj);
+            }
+          }
+          this.triggerListPlat = result;
+      }
+    },
+    rechercher(motCle)
+    {
+      var platsLocal = [];
+      platsLocal = this.listPlatFront;
+    },
     onSelect: function(items) {
       this.selected = items;
     },
@@ -281,7 +314,6 @@ export default {
     },
     commander: function(item) {
       var loggedUser = window.sessionStorage.getItem("loggedUser");
-      debugger;
       if(loggedUser!=null)
       {
         alert("Peut commander");

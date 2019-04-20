@@ -14,6 +14,10 @@
                 <input v-model="plat.prix" type="text">
             </div>
             <div class="form-group">
+                <label>type</label>
+                <input v-model="plat.type" type="text">
+            </div>
+            <div class="form-group">
               <label>Upload Photo:</label>
               <input type="file" id="fileUpload" multiple accept="image/*">
             </div>
@@ -23,6 +27,7 @@
         </form>
   </div>
 </template>
+
 <script>
 
 import { db } from "../config/db";
@@ -43,6 +48,7 @@ export default {
         nom: "",
         designation: "",
         prix: "",
+        type: "",
         image:""
       }
     };
@@ -69,12 +75,14 @@ export default {
                       id : SHA256(daty),
                       nom: this_s.plat.nom,
                       designation: this_s.plat.designation,
+                      type: this_s.plat.type,
                       prix: this_s.plat.prix,
                       image: url,
                   })
                   this_s.plat.nom = '';
                   this_s.plat.designation = '';
                   this_s.plat.prix = '';
+                  this_s.plat.type = '';
                   this_s.plat.image = '';
                   this_s.$router.push("/Commander");
                 }
