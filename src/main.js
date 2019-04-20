@@ -10,6 +10,7 @@ import Login from './components/Login.vue'
 import InsetPlat from './components/InsertPlat.vue'
 import InsertResto from './components/InsertResto.vue'
 import UploadPhoto from './components/UploadPhoto.vue'
+import MesCommande from './components/MesCommande.vue'
 
 // MaterialDashboard plugin
 import MaterialDashboard from "./material-dashboard";
@@ -59,6 +60,11 @@ const routes = [
     name: 'UploadPhoto',
     path: '/uploadPhoto',
     component: UploadPhoto
+  },
+  {
+    name: 'MesCommande',
+    path: '/MesCommande',
+    component: MesCommande
   }
 ];
 
