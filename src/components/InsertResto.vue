@@ -1,5 +1,5 @@
 <template>
-    <div id="container">
+    <!-- <div id="container">
       <form class="login-form" v-on:submit.prevent="addItem">
             <div class="form-group">
                 <label>nom</label>
@@ -41,6 +41,77 @@
               <input type="submit" class="md-raised md-success" value="Inserer">
             </div>
         </form>
+  </div> -->
+  <div id="container" class="md-layout md-alignment-top-center">
+    <div class="md-layout-item md-size-50">
+      <form class="login-form" v-on:submit.prevent="addItem">
+        <md-card>
+          <md-card-header :data-background-color="dataBackgroundColor">
+            <h3 class="title">Inserer un restaurant</h3>
+            <p class="category">Menu d'insertion</p>
+          </md-card-header>
+          <md-card-content>
+            <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Nom restaurant</label>
+                <md-input id="idUsername" v-model="restaurant.nom" type="text"></md-input>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Designation</label>
+                <md-input v-model="restaurant.description" type="text"></md-input>
+              </md-field>
+            </div>
+
+            <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Type cuisine</label>
+                <md-input id="mdp1" v-model="restaurant.typecuisine" type="text"></md-input>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Adresse</label>
+                <md-input id="mdp2" v-model="restaurant.adresse" type="text"></md-input>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Spécialité</label>
+                <md-input id="mdp2" v-model="restaurant.specialite" type="text"></md-input>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Téléphone</label>
+                <md-input id="mdp2" v-model="restaurant.telephone" type="text"></md-input>
+              </md-field>
+            </div>
+             <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Longitude</label>
+                <md-input id="mdp2" v-model="restaurant.longitude" type="text"></md-input>
+              </md-field>
+            </div>
+             <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Latitude</label>
+                <md-input id="mdp2" v-model="restaurant.latitude" type="text"></md-input>
+              </md-field>
+            </div>
+            <div class="form-group">
+              <label>Upload Photo:</label>
+              <input type="file" id="fileUpload" multiple accept="image/*">
+            </div>
+            <div class="md-layout-item md-size-100 text-right">
+              <md-button type="submit" class="md-raised md-success">Inserer</md-button>
+            </div>
+          </md-card-content>
+        </md-card>
+      </form>
+    </div>
+  </div>
   </div>
 </template>
 <script>
