@@ -11,16 +11,15 @@
             <div class="md-layout-item md-small-size-100 md-size-100">
               <md-field>
                 <label>Nom restaurant</label>
-                <md-input id="idUsername" v-model="restaurant.nom" type="text"></md-input>
+                <md-input v-model="restaurant.nom" type="text"></md-input>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100 md-size-100">
               <md-field>
-                <label>Designation</label>
+                <label>Description</label>
                 <md-input v-model="restaurant.description" type="text"></md-input>
               </md-field>
             </div>
-
             <div class="md-layout-item md-small-size-100 md-size-100">
               <md-field>
                 <label>Type cuisine</label>
@@ -107,39 +106,8 @@ export default {
     {
       var fileUpload = document.getElementById("fileUpload");
       if(fileUpload !== null && fileUpload.files != null && fileUpload.files.length != 0){
-          var path = "imagenes/" + fileUpload.files[0].name;
-          var storageRef = storage.ref(path);
-          var firstFile = fileUpload.files[0]; // get the first file uploaded
-          var uploadTask = storageRef.put(firstFile);
-          var this_s = this;
-          uploadTask.on("state_changed", function progress(snapshot) {
-              storageRef.getDownloadURL().then(function(url) {
-                if(this_s != null && this_s.$firebaseRefs != null && this_s.$firebaseRefs.items != null)
-                {
-                  this_s.$firebaseRefs.items.push({
-                      id: SHA256(url),
-                      nom: this_s.restaurant.nom,
-                      description: this_s.restaurant.description,
-                      typecuisine: this_s.restaurant.typecuisine,
-                      adresse: this_s.restaurant.adresse,
-                      specialite: this_s.restaurant.specialite,
-                      telephone: this_s.restaurant.telephone,
-                      longitude: this_s.restaurant.longitude,
-                      latitude: this_s.restaurant.latitude,
-                      image: url,
-                  })
-                  this_s.restaurant.nom = '';
-                  this_s.restaurant.description = '';
-                  this_s.restaurant.typecuisine = '';
-                  this_s.restaurant.adresse = '';
-                  this_s.restaurant.specialite = '';
-                  this_s.restaurant.telephone = '';
-                  this_s.restaurant.longitude = '';
-                  this_s.restaurant.latitude = '';
-                  this_s.$router.push("/Restaurant");
-                }
-              });
-          });
+        var firstFile = fileUpload.files[0];
+        uploadImageAsPromise(this, firstFile);
       }
       else
       {
@@ -150,6 +118,51 @@ export default {
   }
 };
 
+
+function uploadImageAsPromise (this_s, imageFile) {
+    return new Promise(function (resolve, reject) {
+        var storageRef = storage.ref("imagenes/" + imageFile.name);
+        var task = storageRef.put(imageFile);
+        var daty = new Date().getTime().toString();
+        task.on('state_changed',
+            function progress(snapshot){
+                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log(percentage);
+            },
+            function error(err){
+
+            },
+            function complete(){
+                storageRef.getDownloadURL().then(function(downloadURL) {
+                  if(this_s != null && this_s.$firebaseRefs != null && this_s.$firebaseRefs.items != null)
+                  {
+                      this_s.$firebaseRefs.items.push({
+                          id: SHA256(daty),
+                          nom: this_s.restaurant.nom,
+                          description: this_s.restaurant.description,
+                          typecuisine: this_s.restaurant.typecuisine,
+                          adresse: this_s.restaurant.adresse,
+                          specialite: this_s.restaurant.specialite,
+                          telephone: this_s.restaurant.telephone,
+                          longitude: this_s.restaurant.longitude,
+                          latitude: this_s.restaurant.latitude,
+                          image: downloadURL,
+                      })
+                      this_s.restaurant.nom = '';
+                      this_s.restaurant.description = '';
+                      this_s.restaurant.typecuisine = '';
+                      this_s.restaurant.adresse = '';
+                      this_s.restaurant.specialite = '';
+                      this_s.restaurant.telephone = '';
+                      this_s.restaurant.longitude = '';
+                      this_s.restaurant.latitude = '';
+                      this_s.$router.push("/Restaurant");
+                    }
+                });
+            }
+        );
+    });
+}
 
 function SHA256(s){
      var chrsz  = 8;

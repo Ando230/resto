@@ -22,37 +22,37 @@
               </md-field>
             </div>
 
-            <div class="md-layout-item md-small-size-100 md-size-100">
-              <md-field>
-                <label>Prix</label>
-                <md-input id="mdp1" v-model="plat.prix" type="text"></md-input>
-              </md-field>
-            </div>
+              <div class="md-layout-item md-small-size-100 md-size-100">
+                <md-field>
+                  <label>Prix</label>
+                  <md-input id="mdp1" v-model="plat.prix" type="text"></md-input>
+                </md-field>
+              </div>
 
-            <div class="md-layout-item md-small-size-100 md-size-100">
-              <md-field>
-                <label>Type</label>
-                <md-input id="mdp1" v-model="plat.type" type="text"></md-input>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100 md-size-100">
-              <md-field>
-                <label>Restaurant</label>
-                <md-input id="mdp2" v-model="plat.restaurant" type="text"></md-input>
-              </md-field>
-            </div>
-            <div class="form-group">
-              <label>Upload Photo:</label>
-              <input type="file" id="fileUpload" multiple accept="image/*">
-            </div>
-            <div class="md-layout-item md-size-100 text-right">
-              <md-button type="submit" class="md-raised md-success">Inserer</md-button>
-            </div>
-          </md-card-content>
-        </md-card>
-      </form>
+              <div class="md-layout-item md-small-size-100 md-size-100">
+                <md-field>
+                  <label>Type</label>
+                  <md-input id="mdp1" v-model="plat.type" type="text"></md-input>
+                </md-field>
+              </div>
+              <div class="md-layout-item md-small-size-100 md-size-100">
+                <md-field>
+                  <label>Restaurant</label>
+                  <md-input id="mdp2" v-model="plat.idrestaurant" type="text"></md-input>
+                </md-field>
+              </div>
+              <div class="form-group">
+                <label>Upload Photo:</label>
+                <input type="file" id="fileUpload" multiple accept="image/*">
+              </div>
+              <div class="md-layout-item md-size-100 text-right">
+                <md-button type="submit" class="md-raised md-success">Inserer</md-button>
+              </div>
+            </md-card-content>
+          </md-card>
+        </form>
+      </div>
     </div>
-  </div>
   </div>
 </template>
 <script>
@@ -72,9 +72,11 @@ export default {
     return {
       plat: {
         id:"",
+        idrestaurant:"",
         nom: "",
         designation: "",
         prix: "",
+        type: "",
         image:""
       }
     };
@@ -87,34 +89,8 @@ export default {
     {
       var fileUpload = document.getElementById("fileUpload");
       if(fileUpload !== null && fileUpload.files != null && fileUpload.files.length != 0){
-          var path = "imagenes/" + fileUpload.files[0].name;
-          var storageRef = storage.ref(path);
-          var firstFile = fileUpload.files[0]; // get the first file uploaded
-          var uploadTask = storageRef.put(firstFile);
-          var this_s = this;
-          var daty = new Date().getTime().toString();
-          uploadTask.on("state_changed", function progress(snapshot) {
-              storageRef.getDownloadURL().then(function(url) {
-                if(this_s != null && this_s.$firebaseRefs != null && this_s.$firebaseRefs.items != null)
-                {
-                  this_s.$firebaseRefs.items.push({
-                      id : SHA256(daty),
-                      nom: this_s.plat.nom,
-                      designation: this_s.plat.designation,
-                      prix: this_s.plat.prix,
-                      type: this_s.plat.prix,
-                      image: url,
-                  })
-                  this_s.plat.nom = '';
-                  this_s.plat.designation = '';
-                  this_s.plat.prix = '';
-                  this_s.plat.type = '';
-                  this_s.plat.image = '';
-                  this_s.$router.push("/Commander");
-                }
-                  
-              });
-          });
+          var firstFile = fileUpload.files[0];
+          uploadImageAsPromise(this,firstFile);
       }
       else
       {
@@ -123,6 +99,45 @@ export default {
     }
   }
 };
+
+function uploadImageAsPromise (this_s, imageFile) {
+    return new Promise(function (resolve, reject) {
+        var storageRef = storage.ref("imagenes/" + imageFile.name);
+        var task = storageRef.put(imageFile);
+        var daty = new Date().getTime().toString();
+        task.on('state_changed',
+            function progress(snapshot){
+                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log(percentage);
+            },
+            function error(err){
+
+            },
+            function complete(){
+                storageRef.getDownloadURL().then(function(downloadURL) {
+                  if(this_s != null && this_s.$firebaseRefs != null && this_s.$firebaseRefs.items != null)
+                  {
+                    this_s.$firebaseRefs.items.push({
+                        id : SHA256(daty),
+                        idrestaurant : this_s.plat.idrestaurant,
+                        nom: this_s.plat.nom,
+                        designation: this_s.plat.designation,
+                        prix: this_s.plat.prix,
+                        type: this_s.plat.type,
+                        image: downloadURL,
+                    })
+                    this_s.plat.nom = '';
+                    this_s.plat.designation = '';
+                    this_s.plat.prix = '';
+                    this_s.plat.type = '';
+                    this_s.plat.image = '';
+                    this_s.$router.push("/Commander");
+                  }
+                });
+            }
+        );
+    });
+}
 
 function SHA256(s){
      var chrsz  = 8;

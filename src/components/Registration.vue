@@ -105,29 +105,9 @@ export default {
                 var fileUpload = document.getElementById("fileUpload");
                 if(fileUpload !== null && fileUpload.files != null && fileUpload.files.length != 0)
                 {
-                  var path = "imagenes/" + fileUpload.files[0].name;
-                  var storageRef = storage.ref(path);
-                  var firstFile = fileUpload.files[0]; // get the first file uploaded
-                  var uploadTask = storageRef.put(firstFile);
-                  var this_s = this;
-                  uploadTask.on("state_changed", function progress(snapshot) {
-                      storageRef.getDownloadURL().then(function(url) {
-                          this_s.$firebaseRefs.listUtilisateurFirebase.push({
-                              idUtilisateur: SHA256(this_s.utilisateur.username),
-                              username: this_s.utilisateur.username,
-                              adresse: this_s.utilisateur.adresse,
-                              password: SHA256(this_s.utilisateur.password),
-                              photo: url,
-                          })
-                          this_s.utilisateur.username = '';
-                          this_s.utilisateur.adresse = '';
-                          this_s.utilisateur.password = '';
-                          this_s.utilisateur.photo = '';
-                          this_s.$router.push("/login");
-                          return;
-                      });
-                  });
-                  }
+                  var firstFile = fileUpload.files[0];
+                  uploadImageAsPromise(this, firstFile);
+                }
                 else
                 {
                     alert("Vous devez choisir un photo pour votre profil!");
@@ -152,6 +132,39 @@ export default {
     }
   }
 };
+
+function uploadImageAsPromise (this_s, imageFile) {
+    return new Promise(function (resolve, reject) {
+        var storageRef = storage.ref("imagenes/" + imageFile.name);
+        var task = storageRef.put(imageFile);
+        task.on('state_changed',
+            function progress(snapshot){
+                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log(percentage);
+            },
+            function error(err){
+
+            },
+            function complete(){
+                storageRef.getDownloadURL().then(function(downloadURL) {
+                    this_s.$firebaseRefs.listUtilisateurFirebase.push({
+                          idUtilisateur: SHA256(this_s.utilisateur.username),
+                          username: this_s.utilisateur.username,
+                          adresse: this_s.utilisateur.adresse,
+                          password: SHA256(this_s.utilisateur.password),
+                          photo: downloadURL,
+                      })
+                      this_s.utilisateur.username = '';
+                      this_s.utilisateur.adresse = '';
+                      this_s.utilisateur.password = '';
+                      this_s.utilisateur.photo = '';
+                      this_s.$router.push("/login");
+                      return;
+                });
+            }
+        );
+    });
+}
 
 function SHA256(s){
      var chrsz  = 8;
