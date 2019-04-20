@@ -9,6 +9,7 @@ import Registration from './components/Registration.vue'
 import Login from './components/Login.vue'
 import InsetPlat from './components/InsertPlat.vue'
 import InsertResto from './components/InsertResto.vue'
+import UploadPhoto from './components/UploadPhoto.vue'
 
 // MaterialDashboard plugin
 import MaterialDashboard from "./material-dashboard";
@@ -54,6 +55,11 @@ const routes = [
     path: '/insertresto',
     component: InsertResto
   },
+  {
+    name: 'UploadPhoto',
+    path: '/uploadPhoto',
+    component: UploadPhoto
+  }
 ];
 
 const router = new VueRouter({ mode: 'history', routes: routes });

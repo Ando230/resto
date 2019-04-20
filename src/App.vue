@@ -22,6 +22,9 @@
             <router-link :to="{ name: 'InsertResto' }" class="nav-link">Insert resto</router-link>
           </li>
           <li class="nav-item">
+            <router-link :to="{ name: 'UploadPhoto' }" class="nav-link">Upload Photo</router-link>
+          </li>
+          <li class="nav-item">
             <a @click="deconnexion(event)" href="#" class="nav-link">Deconnexion</a>
           </li>
         </ul>
