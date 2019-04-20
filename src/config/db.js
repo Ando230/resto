@@ -10,7 +10,6 @@ let config = {
     storageBucket: "itumbds2019restaurant-f74cd.appspot.com",
     messagingSenderId: "410700678330"
   };
-  
 let app = Firebase.initializeApp(config)
 export const db = app.database()
 export const storage = app.storage()
