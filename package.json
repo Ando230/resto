@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "start": "node app.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
@@ -26,8 +27,5 @@
     "vue-template-compiler": "^2.5.21",
     "node-sass": "4.11.0",
     "sass-loader": "7.1.0"
-  },
-  "scripts": {
-    "start": "node app.js"
   }
 }
