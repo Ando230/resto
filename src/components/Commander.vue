@@ -68,6 +68,11 @@
                               <div class="md-table-head-label">Designation</div>
                             </div>
                           </th>
+                           <th class="md-table-head">
+                            <div class="md-table-head-container md-ripple md-disabled">
+                              <div class="md-table-head-label">Type</div>
+                            </div>
+                          </th>
                           <th class="md-table-head">
                             <div class="md-table-head-container md-ripple md-disabled">
                               <div class="md-table-head-label">Prix</div>
@@ -85,6 +90,9 @@
                           </td>
                           <td class="md-table-cell">
                             <div class="md-table-cell-container">{{plat.designation}}</div>
+                          </td>
+                          <td class="md-table-cell">
+                            <div class="md-table-cell-container">{{plat.type}}</div>
                           </td>
                           <td class="md-table-cell">
                             <div class="md-table-cell-container">{{plat.prix}}</div>
@@ -181,22 +189,10 @@
         </div>
       </div>
     </div>
-    <div class="pagination-container row">
+    <div class="container">
       <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" href="#">Previous</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">1</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">3</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">Next</a>
+        <li class="page-item"  v-for="pagination of listPaginations" :key="pagination['.key']">
+          <a class="page-link" @click="navigateIndex(pagination.value)" href="#">{{pagination.value}}</a>
         </li>
       </ul>
     </div>
@@ -214,9 +210,12 @@ export default {
     return {
       listPlatFirebase:[],
       listPlatFront:[],
+      listPlatPagine: [],
       _prixCommande: 0,
       commandeQte: 0,
-      commandes: []
+      commandes: [],
+      paginations:[],
+      paginationIndex: 0
     };
   },
   firebase: {
@@ -224,12 +223,13 @@ export default {
   },
   mounted() {
       this.listPlatFront = [];
+      this.listPlatPagine = [];
       this.listPlatFront = this.listPlatFirebase;
+      this.listPlatPagine = this.listPlatFront.slice(0, 5);
   },
   computed: {
     prixCommande: {
       get: function() {
-        // var results = 0;
         if (this.commandes && this.commandes.length > 0) {
           this._prixCommande = this.commandes
             .map(item => item.prixCommande)
@@ -243,29 +243,66 @@ export default {
     },
     triggerListPlat: {
       get: function() {
-        return this.listPlatFront;
+        if(this.listPlatPagine == null || this.listPlatPagine.length == 0)
+        {
+            this.listPlatPagine = [];
+            var fireBaseLocal= [];
+            fireBaseLocal = this.listPlatFirebase;
+            this.listPlatPagine = fireBaseLocal.slice(0, 5);
+        }
+        return this.listPlatPagine;
       },
-      set: function(newValue) {
-        this.listPlatFront = newValue;
+      set: function(newVal) {
+        
+        this.listPlatPagine = newVal;
       }
-    }
+    },
+    listPaginations: {
+        get: function() {
+          var localList = [];
+          localList = this.listPlatFront;
+          var nbrCmds = Math.trunc((localList.length / 5));
+          var modulo = localList.length % 5;
+          if(modulo != 0) nbrCmds++;
+          this.paginations = [];
+          for(var i = 1; i <= nbrCmds; i++)
+          {
+              this.paginations.push({value: i});
+          }
+          return this.paginations;
+        },
+        set: function(newVal) {
+        }
+      }
   },
   methods: {
+    navigateIndex: function(value) {
+      
+      var localList = [];
+      localList = this.listPlatFront;
+       this.paginationIndex = (value - 1);
+       var page = this.paginationIndex;
+       var index0 = this.paginationIndex * 5;
+       var index1 = index0 + 5;
+       var cmdSlice = localList.slice(index0, index1); 
+       this.triggerListPlat = cmdSlice;
+     },
     rechercherParType(typeArgs)
     {
       if(typeArgs != null)
       {
-          var platsLocal = [];
           this.listPlatFront = [];
-          this.listPlatFront = this.listPlatFirebase;
-          var result = [];
-          for(var obj of this.listPlatFront)
+          var fireBaseLocal= [];
+          fireBaseLocal = this.listPlatFirebase;
+          for(var obj of fireBaseLocal)
           {
             if(obj.type == typeArgs)
             {
-              result.push(obj);
+              this.listPlatFront.push(obj);
             }
           }
+          var result = [];
+          result =  this.listPlatFront.slice(0, 5); 
           this.triggerListPlat = result;
       }
     },
@@ -384,5 +421,9 @@ export default {
   position:fixed;
   margin-top: 370px;
   margin-left: 10px;
+}
+
+.container .pagination{
+  margin-top: 1000px;
 }
 </style>
