@@ -1,0 +1,25 @@
+[debug] [2019-04-20T19:11:26.456Z] ----------------------------------------------------------------------
+[debug] [2019-04-20T19:11:26.461Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\aramanam\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only hosting
+[debug] [2019-04-20T19:11:26.461Z] CLI Version:   6.7.0
+[debug] [2019-04-20T19:11:26.461Z] Platform:      win32
+[debug] [2019-04-20T19:11:26.461Z] Node Version:  v8.9.4
+[debug] [2019-04-20T19:11:26.462Z] Time:          Sat Apr 20 2019 23:11:26 GMT+0400 (Mauritius Standard Time)
+[debug] [2019-04-20T19:11:26.462Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-04-20T19:11:26.486Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-04-20T19:11:26.488Z] > authorizing via signed-in user
+[debug] [2019-04-20T19:11:26.488Z] [iam] checking project itumbdsrestaurant for permissions ["firebase.projects.get"]
+[debug] [2019-04-20T19:11:26.489Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/itumbdsrestaurant:testIamPermissions  
+
+[debug] [2019-04-20T19:11:28.599Z] <<< HTTP RESPONSE 200
+[debug] [2019-04-20T19:11:28.609Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/itumbdsrestaurant  
+ 
+[debug] [2019-04-20T19:11:30.387Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\aramanam\Documents\itu\MBDS\buffa\restaurant1.1\restaurant11'...
+[info] 
+[debug] [2019-04-20T19:11:30.401Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/436765458051/clients/_:getWebAppConfig  
+ 
+[debug] [2019-04-20T19:11:31.494Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: dist
+[info] +  hosting: Local server: http://localhost:5000
