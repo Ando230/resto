@@ -162,7 +162,7 @@
                               <div class="md-table-cell-container">{{commande.designation}}</div>
                             </td>
                             <td class="md-table-cell">
-                              <div class="md-table-cell-container">{{commande.prix}}</div>
+                              <div class="md-table-cell-container">{{commande.prix}} Rs</div>
                             </td>
                             <td class="md-table-cell">
                               <md-icon>
