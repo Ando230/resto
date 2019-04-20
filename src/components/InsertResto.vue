@@ -54,12 +54,12 @@
             <div class="md-layout-item md-small-size-100 md-size-100">
               <md-field>
                 <label>Nom restaurant</label>
-                <md-input id="idUsername" v-model="restaurant.nom" type="text"></md-input>
+                <md-input v-model="restaurant.nom" type="text"></md-input>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100 md-size-100">
               <md-field>
-                <label>Designation</label>
+                <label>Description</label>
                 <md-input v-model="restaurant.description" type="text"></md-input>
               </md-field>
             </div>

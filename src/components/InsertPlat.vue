@@ -59,7 +59,7 @@
             <div class="md-layout-item md-small-size-100 md-size-100">
               <md-field>
                 <label>Restaurant</label>
-                <md-input id="mdp2" v-model="plat.restaurant" type="text"></md-input>
+                <md-input id="mdp2" v-model="plat.idrestaurant" type="text"></md-input>
               </md-field>
             </div>
             <div class="form-group">
@@ -93,9 +93,11 @@ export default {
     return {
       plat: {
         id:"",
+        idrestaurant:"",
         nom: "",
         designation: "",
         prix: "",
+        type: "",
         image:""
       }
     };
@@ -120,10 +122,11 @@ export default {
                 {
                   this_s.$firebaseRefs.items.push({
                       id : SHA256(daty),
+                      idrestaurant : this_s.plat.idrestaurant,
                       nom: this_s.plat.nom,
                       designation: this_s.plat.designation,
                       prix: this_s.plat.prix,
-                      type: this_s.plat.prix,
+                      type: this_s.plat.type,
                       image: url,
                   })
                   this_s.plat.nom = '';

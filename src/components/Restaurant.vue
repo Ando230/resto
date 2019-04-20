@@ -106,14 +106,12 @@ export default {
       listRestaurants: {
         get: function() {
           var resto =  this.restaurants;
-          var nbrResto = Math.trunc((resto.length / 5) + 1);
           var index0 = this.paginationIndex * 5;
           var index1 = index0 + 5;
           return resto.slice(index0, index1);
         },
         set: function(newValue) {
           var resto =  this.restaurants;
-          var nbrResto = Math.trunc((resto.length / 5) + 1);
           var index0 = this.paginationIndex * 5;
           var index1 = index0 + 5;
           return resto.slice(index0, index1);
@@ -122,7 +120,9 @@ export default {
       listPaginations: {
         get: function() {
           var resto =  this.restaurants;
-          var nbrResto = Math.trunc((resto.length / 5) + 1);
+          var nbrResto = Math.trunc((resto.length / 5));
+          var modulo = resto.length % 5;
+          if(modulo != 0) nbrResto++;
           this.paginations = [];
           for(var i = 1; i <= nbrResto; i++)
           {
@@ -132,7 +132,9 @@ export default {
         },
         set: function() {
           var resto =  this.restaurants;
-          var nbrResto = Math.trunc((resto.length / 5) + 1);
+          var nbrResto = Math.trunc((resto.length / 5));
+          var modulo = resto.length % 5;
+          if(modulo != 0) nbrResto++;
           this.paginations = [];
           for(var i = 1; i <= nbrResto; i++)
           {
