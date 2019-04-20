@@ -1,26 +1,26 @@
 <template>
     <div id="container">
-      <div id="container" class="md-layout md-alignment-top-center">
-      <div class="md-layout-item md-size-50">
-        <form class="login-form" v-on:submit.prevent="addItem">
-          <md-card>
-            <md-card-header :data-background-color="dataBackgroundColor">
-              <h3 class="title">Inserer un plat</h3>
-              <p class="category">Menu d'insertion</p>
-            </md-card-header>
-            <md-card-content>
-              <div class="md-layout-item md-small-size-100 md-size-100">
-                <md-field>
-                  <label>Nom plat</label>
-                  <md-input id="idUsername" v-model="plat.nom" type="text"></md-input>
-                </md-field>
-              </div>
-              <div class="md-layout-item md-small-size-100 md-size-100">
-                <md-field>
-                  <label>Designation</label>
-                  <md-input v-model="plat.designation" type="text"></md-input>
-                </md-field>
-              </div>
+        <div id="container" class="md-layout md-alignment-top-center">
+    <div class="md-layout-item md-size-50">
+      <form class="login-form" v-on:submit.prevent="addItem">
+        <md-card>
+          <md-card-header :data-background-color="dataBackgroundColor">
+            <h3 class="title">Inserer un plat</h3>
+            <p class="category">Menu d'insertion</p>
+          </md-card-header>
+          <md-card-content>
+            <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Nom plat</label>
+                <md-input id="idUsername" v-model="plat.nom" type="text"></md-input>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Designation</label>
+                <md-input v-model="plat.designation" type="text"></md-input>
+              </md-field>
+            </div>
 
               <div class="md-layout-item md-small-size-100 md-size-100">
                 <md-field>
