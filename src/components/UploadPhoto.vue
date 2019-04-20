@@ -47,28 +47,15 @@ export default {
     {
       var fileUpload = document.getElementById("fileUpload");
       if(fileUpload !== null && fileUpload.files != null && fileUpload.files.length != 0){
-
-        for(var obj of fileUpload.files)
+        for(var myFileToUpload of fileUpload.files)
           {
-            if(obj != null && obj.name)
+            if(myFileToUpload != null && myFileToUpload.name)
             {
-                var path = "imagenes/" + obj.name;
-                var storageRef = storage.ref(path);
-                var firstFile = obj; // get the first file uploaded
-                var uploadTask = storageRef.put(firstFile);
-                var this_s = this;
-                uploadTask.on("state_changed", function progress(snapshot) {
-                    storageRef.getDownloadURL().then(function(url) {
-                        if(this_s != null && this_s.$firebaseRefs != null && this_s.$firebaseRefs.firebaseItem != null)
-                        {
-                            this_s.$firebaseRefs.firebaseItem.push({
-                                image: url,
-                            })
-                        }
-                    });
-                });
+                uploadImageAsPromise(this, myFileToUpload);
             }
           }
+          console.log("Upload terminé");
+          alert("Upload terminé");
       }
       else
       {
@@ -77,6 +64,29 @@ export default {
     }
   }
 };
+
+function uploadImageAsPromise (this_s, imageFile) {
+    return new Promise(function (resolve, reject) {
+        var storageRef = storage.ref("imagenes/" + imageFile.name);
+        var task = storageRef.put(imageFile);
+        task.on('state_changed',
+            function progress(snapshot){
+                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log(percentage);
+            },
+            function error(err){
+
+            },
+            function complete(){
+                storageRef.getDownloadURL().then(function(downloadURL) {
+                    this_s.$firebaseRefs.firebaseItem.push({
+                        image: downloadURL
+                    });
+                });
+            }
+        );
+    });
+}
 
 function SHA256(s){
      var chrsz  = 8;
