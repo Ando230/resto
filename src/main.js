@@ -37,9 +37,9 @@ const routes = [
     component: Commander
   },
   {
-    name: 'Commander',
+    name: 'RestaurantHome',
     path: '/',
-    component: Commander
+    component: Restaurant
   },
   {
     name: 'InsertPlat',

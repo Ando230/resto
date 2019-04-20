@@ -115,7 +115,7 @@ export default {
             this.listCommandes = localList;
         }
         else {
-             this.$router.push("/");
+             this.$router.push("/commander");
              return;
         }
         

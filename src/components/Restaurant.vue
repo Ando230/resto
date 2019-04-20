@@ -48,7 +48,7 @@
                       <tbody>
                         <tr
                           class="md-table-row"
-                          v-for="restaurant of listRestaurants" :key="restaurant['.key']" @click="restoClick()"
+                          v-for="restaurant of listRestaurants" :key="restaurant['.key']" @click="restoClick(restaurant)"
                         >
                           <!---->
                           <td class="md-table-cell">
@@ -145,8 +145,9 @@ export default {
       },
   },
   methods : {
-      restoClick: function() {
-        this.$router.push("/");
+      restoClick: function(restaurant) {
+        window.sessionStorage.setItem("idRestaurant",restaurant.id);
+        this.$router.push("/commander");
         return;
       },
      navigateIndex: function(value) {

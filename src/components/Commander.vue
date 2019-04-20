@@ -189,13 +189,6 @@
         </div>
       </div>
     </div>
-    <div class="container">
-      <ul class="pagination">
-        <li class="page-item"  v-for="pagination of listPaginations" :key="pagination['.key']">
-          <a class="page-link" @click="navigateIndex(pagination.value)" href="#">{{pagination.value}}</a>
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
 
@@ -228,7 +221,18 @@ export default {
       this.listPlatFront = [];
       this.listPlatPagine = [];
       this.listPlatFront = this.listPlatFirebase;
-      this.listPlatPagine = this.listPlatFront.slice(0, 5);
+      var idRestaurant = window.sessionStorage.getItem("idRestaurant");
+      if(idRestaurant!=null)
+      {
+        var filtreResto = [];
+         for(var obj of this.listPlatFront)
+          {
+            filtreResto.push(obj);
+          }
+          this.listPlatFront = [];
+          this.listPlatFront = filtreResto;
+      }
+      this.listPlatPagine = this.listPlatFront.slice(0, 10);
   },
   computed: {
     prixCommande: {
@@ -248,15 +252,27 @@ export default {
       get: function() {
         if(this.listPlatPagine == null || this.listPlatPagine.length == 0)
         {
+          var idRestaurant = window.sessionStorage.getItem("idRestaurant");
             this.listPlatPagine = [];
             var fireBaseLocal= [];
+            var filtre= [];
             fireBaseLocal = this.listPlatFirebase;
-            this.listPlatPagine = fireBaseLocal.slice(0, 5);
+            if(idRestaurant!=null)
+            {
+                filtre= [];
+                for(var obj of fireBaseLocal)
+                {
+                  if(obj.idrestaurant == idRestaurant)
+                  {
+                    filtre.push(obj);
+                  }
+                }
+            }
+            this.listPlatPagine = filtre.slice(0, 10);
         }
         return this.listPlatPagine;
       },
       set: function(newVal) {
-        
         this.listPlatPagine = newVal;
       }
     },
@@ -264,8 +280,22 @@ export default {
         get: function() {
           var localList = [];
           localList = this.listPlatFront;
-          var nbrCmds = Math.trunc((localList.length / 5));
-          var modulo = localList.length % 5;
+          var idRestaurant = window.sessionStorage.getItem("idRestaurant");
+          var filtre= [];
+          if(idRestaurant!=null)
+            {
+                filtre= [];
+                for(var obj of this.listPlatFront)
+                {
+                  if(obj.idrestaurant == idRestaurant)
+                  {
+                    filtre.push(obj);
+                  }
+                }
+                localList= filtre;
+            }
+          var nbrCmds = Math.trunc((localList.length / 10));
+          var modulo = localList.length % 10;
           if(modulo != 0) nbrCmds++;
           this.paginations = [];
           for(var i = 1; i <= nbrCmds; i++)
@@ -275,6 +305,7 @@ export default {
           return this.paginations;
         },
         set: function(newVal) {
+          this.paginations = newVal;
         }
       }
   },
@@ -285,8 +316,8 @@ export default {
       localList = this.listPlatFront;
        this.paginationIndex = (value - 1);
        var page = this.paginationIndex;
-       var index0 = this.paginationIndex * 5;
-       var index1 = index0 + 5;
+       var index0 = this.paginationIndex * 10;
+       var index1 = index0 + 10;
        var cmdSlice = localList.slice(index0, index1); 
        this.triggerListPlat = cmdSlice;
      },
@@ -305,7 +336,7 @@ export default {
             }
           }
           var result = [];
-          result =  this.listPlatFront.slice(0, 5); 
+          result =  this.listPlatFront.slice(0, 10); 
           this.triggerListPlat = result;
       }
     },
@@ -358,7 +389,6 @@ export default {
       {
         var panier = [];
         panier = this.commandes;
-        debugger;
         for(var obj of panier)
         {
           var dateCommande = new Date().toString();
@@ -375,7 +405,6 @@ export default {
                           datecommande: dateCommande
                       });
         }
-        debugger;
       }
       else
       {
@@ -384,7 +413,6 @@ export default {
     }
   }
 };
-
 
 
 function SHA256(s){
@@ -485,6 +513,7 @@ function SHA256(s){
      s = Utf8Encode(s);
      return binb2hex(core_sha256(str2binb(s), s.length * chrsz));
     }
+
 
 
 </script>
