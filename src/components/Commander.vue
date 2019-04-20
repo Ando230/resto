@@ -41,7 +41,7 @@
         <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100">
           <div class="md-card md-theme-default">
             <div class="md-card-header" data-background-color="grey">
-              <h4 class="title">Liste des HORS D'OEUVRE</h4>
+              <h4 class="title">Choisir parmis la liste</h4>
               <p class="category">Cliquer pour passer commande</p>
             </div>
             <div class="md-card-content">
@@ -95,7 +95,7 @@
                             <div class="md-table-cell-container">{{plat.type}}</div>
                           </td>
                           <td class="md-table-cell">
-                            <div class="md-table-cell-container">{{plat.prix}}</div>
+                            <div class="md-table-cell-container">{{plat.prix}} Rs</div>
                           </td>
                         </tr>
                       </tbody>
