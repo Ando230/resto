@@ -1,6 +1,6 @@
 <template>
     <div id="container">
-      <form class="login-form" v-on:submit.prevent="addItem">
+      <!-- <form class="login-form" v-on:submit.prevent="addItem">
             <div class="form-group">
                 <label>nom</label>
                 <input type="text" v-model="plat.nom" />
@@ -14,20 +14,68 @@
                 <input v-model="plat.prix" type="text">
             </div>
             <div class="form-group">
-                <label>type</label>
-                <input v-model="plat.type" type="text">
-            </div>
-            <div class="form-group">
               <label>Upload Photo:</label>
               <input type="file" id="fileUpload" multiple accept="image/*">
             </div>
             <div>
               <input type="submit" class="md-raised md-success" value="Inserer">
             </div>
-        </form>
+        </form> -->
+        <div id="container" class="md-layout md-alignment-top-center">
+    <div class="md-layout-item md-size-50">
+      <form class="login-form" v-on:submit.prevent="addItem">
+        <md-card>
+          <md-card-header :data-background-color="dataBackgroundColor">
+            <h3 class="title">Inserer un plat</h3>
+            <p class="category">Menu d'insertion</p>
+          </md-card-header>
+          <md-card-content>
+            <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Nom plat</label>
+                <md-input id="idUsername" v-model="plat.nom" type="text"></md-input>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Designation</label>
+                <md-input v-model="plat.designation" type="text"></md-input>
+              </md-field>
+            </div>
+
+            <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Prix</label>
+                <md-input id="mdp1" v-model="plat.prix" type="text"></md-input>
+              </md-field>
+            </div>
+
+            <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Type</label>
+                <md-input id="mdp1" v-model="plat.type" type="text"></md-input>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Restaurant</label>
+                <md-input id="mdp2" v-model="plat.restaurant" type="text"></md-input>
+              </md-field>
+            </div>
+            <div class="form-group">
+              <label>Upload Photo:</label>
+              <input type="file" id="fileUpload" multiple accept="image/*">
+            </div>
+            <div class="md-layout-item md-size-100 text-right">
+              <md-button type="submit" class="md-raised md-success">Inserer</md-button>
+            </div>
+          </md-card-content>
+        </md-card>
+      </form>
+    </div>
+  </div>
   </div>
 </template>
-
 <script>
 
 import { db } from "../config/db";
@@ -48,7 +96,6 @@ export default {
         nom: "",
         designation: "",
         prix: "",
-        type: "",
         image:""
       }
     };
@@ -75,8 +122,8 @@ export default {
                       id : SHA256(daty),
                       nom: this_s.plat.nom,
                       designation: this_s.plat.designation,
-                      type: this_s.plat.type,
                       prix: this_s.plat.prix,
+                      type: this_s.plat.prix,
                       image: url,
                   })
                   this_s.plat.nom = '';
